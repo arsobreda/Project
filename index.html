@@ -1,0 +1,114 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/bootstrap.min.css")
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" placeholder="&#128100;Username" id="UserName" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="&#128273;Password" id="Password" required>
+                </div>
+                <button type="button" onclick="Login()" class="login-button">Login</button>
+            </form>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+
+        <script>
+
+            function Login() {
+
+                var Params = {};
+
+                Params["p_UserName"] = $("#UserName").val();
+                Params["p_Password"] = $("#Password").val();
+
+                $.post("@Url.Action("Login","Login")", Params, function (p_Result) {
+
+                    if (p_Result == "success") {
+
+                        var username = $("#UserName").val();
+
+                        alert("Welcome, " + username + "!");
+
+                        location.replace("@Url.Action("Index", "Default")");
+                    }
+                    else
+                    {
+                        alert(p_Result);
+                    }
+                });
+            }
+        </script>
+
+        <style>
+
+            body {
+                background-color: #f5f5f5;
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+
+            .login-container {
+                width: 300px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+            }
+
+            .login-form {
+                text-align: center;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
+
+            .login-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #808080;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+
+            .login-button:hover {
+                background-color: #262323;
+                }
+
+        </style>
+
+    </div>
+</body>
+</html>
